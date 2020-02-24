@@ -1,8 +1,8 @@
 # Node.js backend boilerplate in [Nest](https://nestjs.com/) Framework
 
-## Features 
+## Features
 
-1. Express Routing
+1. Express Router
 2. [mysqlx](https://www.npmjs.com/package/mysqlx) Database Connection
 3. [Auth0](https://auth0.com/)
 4. .env configuration with [nestjs-easyconfig](https://www.npmjs.com/package/nestjs-easyconfig)

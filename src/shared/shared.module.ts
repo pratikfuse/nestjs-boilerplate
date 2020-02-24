@@ -3,8 +3,6 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { LoggerModule } from 'nestjs-pino';
 import { LoggingInterceptor } from './logger.interceptor';
-import { ClientsModule } from '@nestjs/microservices';
-import { grpcClientOptions } from 'src/grpc-client.options';
 
 @Module({
     imports: [

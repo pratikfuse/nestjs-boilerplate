@@ -3,9 +3,7 @@ import { DatabaseConfig } from "./database.interface";
 import { DatabaseService } from "./db.service";
 
 
-@Module({
-
-})
+@Module({})
 export class DatabaseModule {
     static  register(options: DatabaseConfig): DynamicModule {
         return {

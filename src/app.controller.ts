@@ -17,15 +17,15 @@ export class AppController {
     }
   }
 
+  // auth guard to check jwt token and user permissions
   @UseGuards(AuthGuard('jwt'), PermissionsGuard)
-  @Get("items")
-  @Permissions('read:posts', 'write:posts')
+  @Get("posts")
+  @Permissions('read:posts')
   async getUsers() {
     const users = await this.appService.getUsers();
     return {
       message: "This is a protected route",
       users
     }
-
   }
 }
