@@ -3,20 +3,15 @@ import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Permissions } from './auth/permissions.decorator';
 import { PermissionsGuard } from './auth/permissions.guard';
-import { SampleService } from './shared/interfaces/sample.interface';
-
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) { }
-
-
   @Get("public")
   getData() {
     return {
       message: "This is a public route"
-    }
+    };
   }
-
   // auth guard to check jwt token and user permissions
   @UseGuards(AuthGuard('jwt'), PermissionsGuard)
   @Get("posts")
@@ -26,6 +21,6 @@ export class AppController {
     return {
       message: "This is a protected route",
       users
-    }
+    };
   }
 }

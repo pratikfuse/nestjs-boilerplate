@@ -2,9 +2,9 @@ import { Module, DynamicModule } from "@nestjs/common";
 import { DatabaseConfig } from "./database.interface";
 import { DatabaseService } from "./db.service";
 
-
 @Module({})
 export class DatabaseModule {
+
     static  register(options: DatabaseConfig): DynamicModule {
         return {
             module: DatabaseModule,
@@ -15,6 +15,6 @@ export class DatabaseModule {
                 }
             ],
             exports: [DatabaseService]
-        }
+        };
     }
 }

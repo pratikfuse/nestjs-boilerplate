@@ -1,8 +1,6 @@
 import { Catch, ExceptionFilter, HttpStatus } from "@nestjs/common";
 import { Logger } from "nestjs-pino";
 
-
-
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
     constructor(
@@ -29,12 +27,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
         this.logger.error(
             `${request.method} ${request.url}`, errorResponse.message
-        )
-
-
-
-        response.status(200).json(errorResponse)
-
+        );
+        response.status(200).json(errorResponse);
     }
 
 }
