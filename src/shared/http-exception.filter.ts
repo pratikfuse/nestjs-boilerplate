@@ -14,11 +14,22 @@ export class HttpExceptionFilter implements ExceptionFilter {
             ? exception.getStatus()
             : HttpStatus.INTERNAL_SERVER_ERROR;
 
+        let errors = [];
+        if (Array.isArray(exception.message.message)) {
+            errors = exception.message.message.map((item: any) => {
+                const key = Object.keys(item.constraints)[0];
+                return {
+                    [item.property]: item.constraints[key]
+                };
+            });
+        }
+
         const errorResponse = {
             code: status,
-            timestamp: new Date().toLocaleDateString(),
+            timestamp: new Date().toISOString(),
             path: request.url,
             method: request.method,
+            ...(errors.length > 0 ? { errors } : {}),
             message:
                 status !== HttpStatus.INTERNAL_SERVER_ERROR
                     ? exception.message.error || exception.message || null
