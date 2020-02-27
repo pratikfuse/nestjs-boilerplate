@@ -1,11 +1,17 @@
 import { Catch, ExceptionFilter, HttpStatus } from "@nestjs/common";
-import { Logger } from "nestjs-pino";
+import logger from "./utils/logger";
 
+interface IErrorResponse {
+    code: number;
+    timestamp: string;
+    path: string;
+    method: string;
+    errors?: any,
+    message: string
+}
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-    constructor(
-        private readonly logger: Logger
-    ) { }
+
     catch(exception: any, host: import("@nestjs/common").ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
@@ -24,7 +30,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
             });
         }
 
-        const errorResponse = {
+        const errorResponse: IErrorResponse = {
             code: status,
             timestamp: new Date().toISOString(),
             path: request.url,
@@ -32,14 +38,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
             ...(errors.length > 0 ? { errors } : {}),
             message:
                 status !== HttpStatus.INTERNAL_SERVER_ERROR
-                    ? exception.message.error || exception.message || null
-                    : 'Internal server error',
+                    ? exception.message.error || exception.message : 'Internal server error',
         };
 
-        this.logger.error(
-            `${request.method} ${request.url}`, errorResponse.message
-        );
-        response.status(200).json(errorResponse);
+        logger.error(
+            `${request.method} ${request.url}`, JSON.stringify(errorResponse.errors), 'HttpExceptionFilter'
+        )
+
+        response.status(status).json(errorResponse);
     }
 
 }

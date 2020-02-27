@@ -4,6 +4,7 @@ import {
     Schema,
 } from "mysqlx";
 import { DatabaseConfig } from "./database.interface";
+import logger from "src/shared/utils/logger";
 
 @Injectable()
 export class DatabaseService {
@@ -19,8 +20,8 @@ export class DatabaseService {
             const session = await getSession(options);
             this.db = session.getSchema(options.schema);
         } catch (error) {
-            Logger.error(error);
-            Logger.log(`Retrying in ${options.retry / 1000} seconds`);
+            logger.error(error);
+            logger.log(`Retrying in ${options.retry / 1000} seconds`);
             setTimeout(() => {
                 this.connect(options);
             }, options.retry);
