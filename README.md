@@ -6,9 +6,8 @@
 2. [mysqlx](https://www.npmjs.com/package/mysqlx) Database Connection
 3. [Auth0](https://auth0.com/)
 4. .env configuration with [nestjs-easyconfig](https://www.npmjs.com/package/nestjs-easyconfig)
-5. [gRPC](https://grpc.io/) Client Library as microservice communication channel
-6. [Pino](https://getpino.io/) Logger
-  
+5. [Winston](https://github.com/winstonjs/winston) Logger
+
 ### Initialization
 
 1. Create .env.local file in root directory
