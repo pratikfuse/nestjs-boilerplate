@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package sample;
-
-message SampleRequest { string message = 1; }
-
-message SampleResponse { string response = 1; }
-
-service SampleService { rpc SendRequest(SampleRequest) returns (SampleResponse); };

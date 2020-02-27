@@ -4,10 +4,9 @@ import { WinstonModule } from "nest-winston";
 const today = new Date();
 const logDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
-const myFormat = format.printf(({ level, message, label, timestamp }) => {
+const myFormat = format.printf(({ level, message, timestamp }) => {
     return `${timestamp}  ${level}: ${message}`;
 });
-console.log(process.env.NODE_ENV)
 const logger = WinstonModule.createLogger({
     transports: [
         new (transports.Console)({ level: process.env.NODE_ENV === "production" ? "error" : "debug" }),
@@ -15,6 +14,7 @@ const logger = WinstonModule.createLogger({
         new (transports.File)({ filename: `./logs/${logDate}-error.log`, level: "error" }),
         new (transports.File)({ filename: `./logs/${logDate}-info.log`, level: "info" })
     ],
+    silent: process.env.NODE_ENV === "production",
     ...(process.env.NODE_ENV === "local" ? {
         format: format.combine(
             format.timestamp(),

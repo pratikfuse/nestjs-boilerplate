@@ -1,33 +1,12 @@
-import { Injectable, HttpException, HttpStatus, Inject, OnModuleInit } from '@nestjs/common';
-import { DatabaseService } from './database/db.service';
-import { ClientGrpc } from "@nestjs/microservices";
-import { SampleService } from './shared/interfaces/sample.interface';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class AppService implements OnModuleInit {
-  sampleService: SampleService;
-  constructor(
-    private readonly dbService: DatabaseService,
-    @Inject("SAMPLE_PACKAGE") private readonly grpcClient: ClientGrpc
-  ) { }
-
-  onModuleInit() {
-    this.sampleService = this.grpcClient.getService<SampleService>("SampleService");
-  }
+export class AppService {
+  constructor() { }
 
   async getUsers() {
-    try {
-      const response = await this.dbService.db.getCollection('users').find().execute();
-      return response.getDocuments();
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    return {
+      users: ["User1", "User2"]
     }
   }
-
-  getSampleResponse() {
-    this.sampleService.sendRequest({
-      message: "Hello World"
-    });
-  }
-
 }
